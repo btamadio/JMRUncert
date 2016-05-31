@@ -23,8 +23,14 @@ for entry in range(nomTree.GetEntries()):
     smearedMass.clear()
     nomTree.GetEntry(entry)
     for i in range(nomTree.fatjet_pt.size()):
-        bin = rHist.FindBin(nomTree.fatjet_pt.at(i))
+        pt = nomTree.fatjet_pt.at(i)
+        if pt > 1800:
+            pt == 1750
+        bin = rHist.FindBin(pt)
         width = rHist.GetBinError(bin)
-        smearedMass.push_back(nomTree.fatjet_m.at(i)*r.Gaus(1,0.66*width))
+        p = r.Gaus(1,0.66*width)
+        newMass = p*nomTree.fatjet_m.at(i)
+        smearedMass.push_back(newMass)
+#        print 'width = %f, p = %f, old mass = %f, new mass = %f' % (width,p,nomTree.fatjet_m.at(i),newMass)
     systTree.Fill()
 outFile.Write()
