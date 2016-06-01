@@ -25,12 +25,14 @@ for entry in range(nomTree.GetEntries()):
     for i in range(nomTree.fatjet_pt.size()):
         pt = nomTree.fatjet_pt.at(i)
         if pt > 1800:
-            pt == 1750
+            pt = 1800
+        if pt < 200:
+            pt = 200
         bin = rHist.FindBin(pt)
         width = rHist.GetBinError(bin)
         p = r.Gaus(1,0.66*width)
         newMass = p*nomTree.fatjet_m.at(i)
         smearedMass.push_back(newMass)
-#        print 'width = %f, p = %f, old mass = %f, new mass = %f' % (width,p,nomTree.fatjet_m.at(i),newMass)
+        print 'width = %f, p = %f, old mass = %f, new mass = %f' % (width,p,nomTree.fatjet_m.at(i),newMass)
     systTree.Fill()
 outFile.Write()
