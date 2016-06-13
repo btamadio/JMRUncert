@@ -33,6 +33,8 @@ for entry in range(nomTree.GetEntries()):
         p = r.Gaus(1,0.66*width)
         newMass = p*nomTree.fatjet_m.at(i)
         smearedMass.push_back(newMass)
-        print 'width = %f, p = %f, old mass = %f, new mass = %f' % (width,p,nomTree.fatjet_m.at(i),newMass)
+        if i % 1000 == 0:
+            print 'Event num %i' % i
+#            print 'width = %f, p = %f, old mass = %f, new mass = %f' % (width,p,nomTree.fatjet_m.at(i),newMass)
     systTree.Fill()
 outFile.Write()
